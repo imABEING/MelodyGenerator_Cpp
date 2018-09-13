@@ -1,6 +1,6 @@
-#Kamilah Mitchell
+# Kamilah Mitchell
 
-##MELODY GENERATOR
+## MELODY GENERATOR
 
 
 1. Open terminal 
