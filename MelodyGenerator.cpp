@@ -1,5 +1,8 @@
-// g++ -o MelodyGenerator MelodyGenerator.cpp && ./MelodyGenerator
-
+// Melody Generator 
+//
+// Kamilah Mitchell
+//
+// To complie & run: g++ -o MelodyGenerator MelodyGenerator.cpp && ./MelodyGenerator
 
 #include <iostream>
 #include <string>
@@ -13,11 +16,9 @@ using namespace std;
 #define AUTHOR "  by Kamilah Mitchell"
 #define SIZE 12
 
-
 FILE *Point; 
 char csdFile[256] = "Playback.csd";
 int system();
-
 void heading();
 int rep();
 int osc();
@@ -44,15 +45,12 @@ void heading()
 int osc()
 {
     //user input
-    
     char melody[SIZE];  
     float k[SIZE];
     float dur[SIZE];
     int x;
     int *number;
-
     number = &x;
-
 
     dur[0] = 1;
     dur[1] = 0.5;
@@ -66,15 +64,12 @@ int osc()
     dur[9] = 1;
     dur[10] = 0.3;
     dur[11] = 1;
-
     
     cout << "\nPlease enter 12 notes.\n";
     
     for(x=0; x < SIZE; x++)
     {
-    	//printf("\n%d. ", x+1);
         cout << x+1;
-        //scanf("\n%c", &melody[x]);
         cin >> melody[x];
 
         switch(melody[x])
@@ -136,18 +131,13 @@ int osc()
             break;
                 
             default:
-                cout << "That was not a note name.";
-                
+                cout << "That was not a note name.";            
         }
-
     }  
-    
 
     Point = fopen(csdFile, "w");
-    if(Point != NULL)
-        
-    {   
-           
+    if(Point != NULL)       
+    {         
         fprintf(Point,"<CsoundSynthesizer>\n");
         fprintf(Point,"<CsInstruments>\n");
         fprintf(Point,"instr testing\n");
@@ -158,12 +148,10 @@ int osc()
         fprintf(Point,"</CsInstruments>\n");
         fprintf(Point,"<CsScore>\n");
         fprintf(Point,"f 1  0 8192 10   1 ; GEN10 to compute a sine wave\n");
-
-        
+   
         for(x=0; x < SIZE; x++)
         {
             fprintf(Point,"i \"testing\" %d %f 0 %f\n", *number, dur[x], k[x]);
-        
         }
         
         fprintf(Point,"e 0.1\n");
@@ -171,8 +159,7 @@ int osc()
         fprintf(Point,"</CsoundSynthesizer>\n");
     }
     
-    fclose(Point);
-    
+    fclose(Point);  
     char commandline [1000] = "csound -odac -d -O null ";
     strcat(commandline, csdFile);
     system (commandline);
@@ -180,36 +167,34 @@ int osc()
     return 0;
 }
 
-
-
 int rep()
-	{
-		char replay;
+{
+    char replay;
         
-        system("clear");
-		cout << NEWLINE;
-        cout << "\n \t " << LINE << NEWLINE;
-		cout << "\tWould you like to generate another melody?\n";
-		cout << "\tY or N\n";
-
-		//scanf("%s", &replay);
-        cin >> replay;
+    system("clear");
+    cout << NEWLINE;
+    cout << "\n \t " << LINE << NEWLINE;
+    cout << "\tWould you like to generate another melody?\n";
+    cout << "\tY or N\n";
+	
+    cin >> replay;
         
-        switch(replay)
-        {
-            case 'Y':
-                main();
-                break;
+    switch(replay)
+    {
+    	case 'Y':
+    	    main();
+            break;
         
-            case 'y':
-                main();
-                break;
+    	case 'y':
+            main();
+            break;
         
-            default:
-                system("clear");
-                cout << NEWLINE;
-                cout << "\tGoodbye!" << NEWLINE;
-                cout << "\t "<< LINE << NEWLINE;
-        }
-		return 0;
-	}
+        default:
+            system("clear");
+		    
+        cout << NEWLINE;
+        cout << "\tGoodbye!" << NEWLINE;
+        cout << "\t "<< LINE << NEWLINE;
+    }
+    	return 0;
+}
