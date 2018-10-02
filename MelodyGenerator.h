@@ -1,9 +1,9 @@
-
-
 #include <iostream>
 #include <string>
 #include <stdlib.h>
 #include <cstdio>
+#include <cstdlib>
+#include <math.h>
 using namespace std;
 
 #define NEWLINE '\n'
@@ -16,7 +16,7 @@ char csdFile[256] = "Playback.csd";
 
 class MelodyGenerator {
     FILE *Point;
-    int *ketch;
+    int *a;
     
 public:
     void heading();
@@ -29,10 +29,11 @@ public:
 
 
 MelodyGenerator::MelodyGenerator() {
-    
+    //a = malloc(sizeof(Point));
 }
+
 MelodyGenerator::~MelodyGenerator() {
-    delete[] ketch;
+    //delete[] a;
 }
 
 
@@ -49,27 +50,22 @@ void MelodyGenerator::heading()
 
 int MelodyGenerator::osc()
 {
-    //user input
+    //user input variables
     char melody[SIZE];
     float k[SIZE];
     float dur[SIZE];
-    int x;
+    float dummy[SIZE];
+    int x, y, z;
     int *number;
     
     number = &x;
     
-    dur[0] = 1;
-    dur[1] = 0.5;
-    dur[2] = 0.3;
-    dur[3] = 0.3;
-    dur[4] = 1;
-    dur[5] = 0.3;
-    dur[6] = 0.3;
-    dur[7] = 0.5;
-    dur[8] = 0.5;
-    dur[9] = 1;
-    dur[10] = 0.3;
-    dur[11] = 1;
+    for (y=0; y<12; y++)
+    {
+        dummy[y] = rand() % (3 + 3 - 1) + 1;
+        dur[y] = dummy[y] / 2;
+    }
+    
     
     cout << "\nPlease enter 12 notes.\n";
     
@@ -160,6 +156,7 @@ int MelodyGenerator::osc()
         for(x=0; x < SIZE; x++)
         {
             fprintf(Point,"i \"testing\" %d %f 0 %f\n", *number, dur[x], k[x]);
+            //fprintf(Point,"e %f\n", dur[x]);
         }
         
         fprintf(Point,"e 0.1\n");
@@ -183,26 +180,36 @@ int MelodyGenerator::rep()
     system("clear");
     cout << NEWLINE;
     cout << "\n \t " << LINE << NEWLINE;
-    cout << "\tWould you like to generate another melody?\n";
-    cout << "\tY or N\n";
+    cout << "\tWould you like to generate another melody?\n" << endl;
+    cout << "\tY or N\n" << endl;
+    
+    bool gameOver;
     
     cin >> replay;
     
-    switch(replay)
+    if (replay == 'N' || replay == 'n')
     {
-        case 'Y':
-            osc();
-            break;
-            
-        case 'y':
-            osc();
-            break;
-            
-        default:
-            system("clear");
-            cout << NEWLINE;
-            cout << "\tGoodbye!" << NEWLINE;
-            cout << "\t "<< LINE << NEWLINE;
+        gameOver = true;
+        
+        system("clear");
+        cout << NEWLINE;
+        cout << "\tGoodbye!" << endl;
+        cout << "\t "<< LINE << NEWLINE;
     }
+    
+    if (replay == 'Y' || replay == 'y')
+    {
+        gameOver = false;
+        
+        osc();
+        rep();
+    }
+    
+    else
+    {
+        cout << "That was not a valid response" << endl;
+        rep();
+    }
+    
     return 0;
 }
