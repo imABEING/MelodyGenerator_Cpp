@@ -22,6 +22,7 @@ public:
     void heading();
     int rep();
     int osc();
+    int endGame();
     
     MelodyGenerator();
     ~MelodyGenerator();
@@ -63,7 +64,7 @@ int MelodyGenerator::osc()
     for (y=0; y<12; y++)
     {
         dummy[y] = rand() % (3 + 3 - 1) + 1;
-        dur[y] = dummy[y] / 2;
+        dur[y] = dummy[y] / 1.5;
     }
     
     
@@ -170,6 +171,9 @@ int MelodyGenerator::osc()
     strcat(commandline, csdFile);
     system (commandline);
     
+    cout << "Go to Rep" << endl;
+    rep();
+    
     return 0;
 }
 
@@ -190,14 +194,10 @@ int MelodyGenerator::rep()
     if (replay == 'N' || replay == 'n')
     {
         gameOver = true;
-        
-        system("clear");
-        cout << NEWLINE;
-        cout << "\tGoodbye!" << endl;
-        cout << "\t "<< LINE << NEWLINE;
+        endGame();
     }
     
-    if (replay == 'Y' || replay == 'y')
+    else if (replay == 'Y' || replay == 'y')
     {
         gameOver = false;
         
@@ -212,4 +212,14 @@ int MelodyGenerator::rep()
     }
     
     return 0;
+}
+
+int MelodyGenerator::endGame()
+{
+    system("clear");
+    cout << NEWLINE;
+    cout << "\tGoodbye!" << endl;
+    cout << "\t "<< LINE << NEWLINE;
+    
+    return EXIT_SUCCESS;
 }

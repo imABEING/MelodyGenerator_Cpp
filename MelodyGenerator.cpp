@@ -8,6 +8,5 @@ int main()
     
     run.heading();
     run.osc();
-    run.rep();
     return 0;
 }
