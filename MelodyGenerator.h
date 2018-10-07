@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <cstdio>
 #include <cstdlib>
+#include <string.h>
 #include <math.h>
 using namespace std;
 
@@ -12,11 +13,9 @@ using namespace std;
 #define AUTHOR "  by Kamilah Mitchell"
 #define SIZE 12
 
-char csdFile[256] = "Playback.csd";
-
 class MelodyGenerator {
     FILE *Point;
-    int *a;
+    
     
 public:
     void heading();
@@ -26,15 +25,31 @@ public:
     
     MelodyGenerator();
     ~MelodyGenerator();
+    
+private:
+//    typedef struct {
+        int* data;
+        int mem;
+        char melody[SIZE];
+        float k[SIZE];
+        float dur[SIZE];
+        float dummy[SIZE];
+        int x, y, z;
+        int *number;
+        char replay;
+        bool gameOver;
+        char csdFile[256] = "MelodyGenerator.csd";
+//    } oscdata;
 };
 
 
 MelodyGenerator::MelodyGenerator() {
-    //a = malloc(sizeof(Point));
+    data = new int;
+    //data = atoi(csdFile);
 }
 
 MelodyGenerator::~MelodyGenerator() {
-    //delete[] a;
+    delete[] data;
 }
 
 
@@ -52,12 +67,6 @@ void MelodyGenerator::heading()
 int MelodyGenerator::osc()
 {
     //user input variables
-    char melody[SIZE];
-    float k[SIZE];
-    float dur[SIZE];
-    float dummy[SIZE];
-    int x, y, z;
-    int *number;
     
     number = &x;
     
@@ -179,15 +188,11 @@ int MelodyGenerator::osc()
 
 int MelodyGenerator::rep()
 {
-    char replay;
-    
     system("clear");
     cout << NEWLINE;
     cout << "\n \t " << LINE << NEWLINE;
     cout << "\tWould you like to generate another melody?\n" << endl;
     cout << "\tY or N\n" << endl;
-    
-    bool gameOver;
     
     cin >> replay;
     
@@ -200,7 +205,6 @@ int MelodyGenerator::rep()
     else if (replay == 'Y' || replay == 'y')
     {
         gameOver = false;
-        
         osc();
         rep();
     }
