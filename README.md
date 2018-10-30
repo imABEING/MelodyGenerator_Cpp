@@ -10,4 +10,4 @@
 
 
 
-This program takes user input and processes it into a melody. The user is prompted for 12 notes which are then played upon the entering of the last note. 
+This program takes user input and processes it into a melody using cSound. The user is prompted for 12 notes which are then played upon the entering of the last note. 
